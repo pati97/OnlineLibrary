@@ -9,20 +9,21 @@ using System.Web;
 
 namespace OnlineLibrary.DAL
 {
-    public class LibraryContext : IdentityDbContext
+    public class LibraryDbContext : IdentityDbContext
     {
 
-        public LibraryContext() : base("LibraryContext")
+        public LibraryDbContext() : base("LibraryDbContext")
         {
         }
 
-        public static LibraryContext Create()
+        public static LibraryDbContext Create()
         {
-            return new LibraryContext();
+            return new LibraryDbContext();
         }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Comments> Comments { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -31,6 +32,10 @@ namespace OnlineLibrary.DAL
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
+            modelBuilder.Entity<Book>().HasRequired
+                (x => x.User).WithMany(x => x.Books)
+                .HasForeignKey(x => x.UserId)
+                .WillCascadeOnDelete(true);
         }
     }
 }
