@@ -191,6 +191,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="DAL\LibraryDbContext.cs" />
@@ -200,6 +201,14 @@
     <Compile Include="Migrations\201903051516185_InitialMigrations.cs" />
     <Compile Include="Migrations\201903051516185_InitialMigrations.Designer.cs">
       <DependentUpon>201903051516185_InitialMigrations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903241337230_AddingSeedMethod.cs" />
+    <Compile Include="Migrations\201903241337230_AddingSeedMethod.Designer.cs">
+      <DependentUpon>201903241337230_AddingSeedMethod.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903241849379_AddCategoryIdToBookModel.cs" />
+    <Compile Include="Migrations\201903241849379_AddCategoryIdToBookModel.Designer.cs">
+      <DependentUpon>201903241849379_AddCategoryIdToBookModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -276,6 +285,11 @@
     <Content Include="Views\Books\Details.cshtml" />
     <Content Include="Views\Books\Edit.cshtml" />
     <Content Include="Views\Books\Index.cshtml" />
+    <Content Include="Views\Categories\Create.cshtml" />
+    <Content Include="Views\Categories\Delete.cshtml" />
+    <Content Include="Views\Categories\Details.cshtml" />
+    <Content Include="Views\Categories\Edit.cshtml" />
+    <Content Include="Views\Categories\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -296,6 +310,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201903051516185_InitialMigrations.resx">
       <DependentUpon>201903051516185_InitialMigrations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903241337230_AddingSeedMethod.resx">
+      <DependentUpon>201903241337230_AddingSeedMethod.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903241849379_AddCategoryIdToBookModel.resx">
+      <DependentUpon>201903241849379_AddCategoryIdToBookModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
