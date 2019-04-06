@@ -4,30 +4,46 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2 style="text-align:center">Categories of Books</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create",null, new { @class = "btn btn-success" })
+    </p>
+}
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
-        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumberOfBooks)
+        </th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        item.NumberOfBooks = item.GetNumberOfBooksInCategory(item.ID);
+        <tr>
+            <td>
+                @Html.ActionLink(item.Name, "ShowBooks", new { id = item.ID }, new { @class = "btn btn-info" })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfBooks)
+            </td>
+            <td>
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    <br />
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-primary" }) 
+                    <br />
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-warning" }) 
+                    <br/>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-danger" })
+                }
+            </td>
+        </tr>
+                }
 
 </table>

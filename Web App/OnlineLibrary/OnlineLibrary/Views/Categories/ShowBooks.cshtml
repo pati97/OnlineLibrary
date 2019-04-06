@@ -1,0 +1,41 @@
+﻿@model OnlineLibrary.Models.BooksFromCategoryViewModels
+
+@{
+    ViewBag.Title = "Books from category:" + Model.CategoryName;
+}
+
+<h2>Show Books from category: @Model.CategoryName</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Books.First().Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Books.First().Author)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Books.First().Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Books.First().YearOfPublication)
+        </th>
+        @foreach (var item in Model.Books)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.YearOfPublication)
+            </td>
+        </tr>
+        }
+</table>
+

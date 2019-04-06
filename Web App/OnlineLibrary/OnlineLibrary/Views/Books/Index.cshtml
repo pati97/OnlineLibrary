@@ -4,11 +4,15 @@
     ViewBag.Title = "Index";
 }
 
-<h2>List of books</h2>
+<h2 style="text-align:center">List of books</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@if (User.Identity.IsAuthenticated)
+{
+    <p>
+        @Html.ActionLink("Add New Book", "Create", null, new { @class = "btn btn-success" })
+    </p>
+}
+<br />
 <table class="table">
     <tr>
         <th>
@@ -26,26 +30,36 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr> 
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Author)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.YearOfPublication)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.YearOfPublication)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-warning" })
+
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    <br />
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-primary" })
+                    <br />
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-danger" })
+                }
+
+
+
+            </td>
+        </tr>
+    }
 
 </table>

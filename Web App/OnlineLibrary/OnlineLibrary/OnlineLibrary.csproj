@@ -210,9 +210,18 @@
     <Compile Include="Migrations\201903241849379_AddCategoryIdToBookModel.Designer.cs">
       <DependentUpon>201903241849379_AddCategoryIdToBookModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904061822155_AddingNumberOfBookToCategory.cs" />
+    <Compile Include="Migrations\201904061822155_AddingNumberOfBookToCategory.Designer.cs">
+      <DependentUpon>201904061822155_AddingNumberOfBookToCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904061847141_Config.cs" />
+    <Compile Include="Migrations\201904061847141_Config.Designer.cs">
+      <DependentUpon>201904061847141_Config.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
+    <Compile Include="Models\BooksFromCategoryViewModels.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Comments.cs" />
@@ -290,6 +299,7 @@
     <Content Include="Views\Categories\Details.cshtml" />
     <Content Include="Views\Categories\Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
+    <Content Include="Views\Categories\ShowBooks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -316,6 +326,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903241849379_AddCategoryIdToBookModel.resx">
       <DependentUpon>201903241849379_AddCategoryIdToBookModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904061822155_AddingNumberOfBookToCategory.resx">
+      <DependentUpon>201904061822155_AddingNumberOfBookToCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904061847141_Config.resx">
+      <DependentUpon>201904061847141_Config.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

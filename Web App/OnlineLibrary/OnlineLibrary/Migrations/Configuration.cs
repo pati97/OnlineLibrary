@@ -63,7 +63,7 @@ namespace OnlineLibrary.Migrations
 
             if (!context.Users.Any(u => u.UserName == "Admin"))
             {
-                var user = new ApplicationUser { UserName = "Admin" };
+                var user = new ApplicationUser { UserName = "Admin@mail.com" };
                 var adminresult = manager.Create(user, "123456789");
                 if (adminresult.Succeeded)
                 {
@@ -78,6 +78,16 @@ namespace OnlineLibrary.Migrations
                 if (adminresult.Succeeded)
                 {
                     manager.AddToRole(user.Id, "User");
+                }
+            }
+
+            if (!context.Users.Any(u => u.UserName == "Prezes"))
+            {
+                var user = new ApplicationUser { UserName = "admin@mail.com" };
+                var adminresult = manager.Create(user, "123456789");
+                if (adminresult.Succeeded)
+                {
+                    manager.AddToRole(user.Id, "Admin");
                 }
             }
         }
