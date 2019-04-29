@@ -218,6 +218,18 @@
     <Compile Include="Migrations\201904061847141_Config.Designer.cs">
       <DependentUpon>201904061847141_Config.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904291413169_AddingFieldFilePath.cs" />
+    <Compile Include="Migrations\201904291413169_AddingFieldFilePath.Designer.cs">
+      <DependentUpon>201904291413169_AddingFieldFilePath.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904291801201_AddingPath.cs" />
+    <Compile Include="Migrations\201904291801201_AddingPath.Designer.cs">
+      <DependentUpon>201904291801201_AddingPath.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904291830226_AddingPathToBook.cs" />
+    <Compile Include="Migrations\201904291830226_AddingPathToBook.Designer.cs">
+      <DependentUpon>201904291830226_AddingPathToBook.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
@@ -332,6 +344,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904061847141_Config.resx">
       <DependentUpon>201904061847141_Config.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904291413169_AddingFieldFilePath.resx">
+      <DependentUpon>201904291413169_AddingFieldFilePath.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904291801201_AddingPath.resx">
+      <DependentUpon>201904291801201_AddingPath.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904291830226_AddingPathToBook.resx">
+      <DependentUpon>201904291830226_AddingPathToBook.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -9,6 +9,8 @@ namespace OnlineLibrary.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
     using System.Collections.Generic;
+    using System.IO;
+    using System.Web.Hosting;
 
     internal sealed class Configuration : DbMigrationsConfiguration<OnlineLibrary.DAL.LibraryDbContext>
     {
@@ -94,11 +96,12 @@ namespace OnlineLibrary.Migrations
         private void SeedBooks(LibraryDbContext context)
         {
             var idUser = context.Set<ApplicationUser>().Where(u => u.UserName == "Admin").FirstOrDefault().Id;
+            DirectoryInfo dirInfo = new DirectoryInfo(@"C:\Users\pati\Desktop\semestr 6\OnlineLibrary\Web App\OnlineLibrary\OnlineLibrary\Files");
             context.Set<Book>().AddOrUpdate(
                 b => b.Title, 
-                new Book { ID = 1, UserId = idUser, Title = "Hamlet", Description = "A description of Hamlet", Author = "William Shakespeare", YearOfPublication = 1599, CategoryID = 7 },
-                new Book { ID = 2, UserId = idUser, Title = "It", Description = "A description of It", Author = "Stephen King", YearOfPublication = 1986, CategoryID = 3},
-                new Book { ID = 3, UserId = idUser, Title = "MacBeth", Description = "A description of MacBeth", Author = "William Shakespeare", YearOfPublication = 1606, CategoryID = 7}
+                new Book { ID = 1, UserId = idUser, Title = "Hamlet", Description = "A description of Hamlet", Author = "William Shakespeare", YearOfPublication = 1599, CategoryID = 7, FilePath = dirInfo.FullName+@"\Hamlet.pdf"},
+                new Book { ID = 2, UserId = idUser, Title = "It", Description = "A description of It", Author = "Stephen King", YearOfPublication = 1986, CategoryID = 3, FilePath = dirInfo.FullName + @"\It.pdf" },
+                new Book { ID = 3, UserId = idUser, Title = "MacBeth", Description = "A description of MacBeth", Author = "William Shakespeare", YearOfPublication = 1606, CategoryID = 7, FilePath = dirInfo.FullName + @"\MacBeth.pdf" }
             );
             //context.Books.AddRange(books);
             context.SaveChanges();

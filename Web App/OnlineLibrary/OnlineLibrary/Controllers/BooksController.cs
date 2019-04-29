@@ -50,7 +50,7 @@ namespace OnlineLibrary.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,UserId,Title,Author,Description,YearOfPublication")] Book book)
+        public ActionResult Create([Bind(Include = "ID,UserId,Title,Author,Description,YearOfPublication,FilePath")] Book book)
         {
             if (ModelState.IsValid)
             {
@@ -133,6 +133,18 @@ namespace OnlineLibrary.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public FileResult Download(string id)
+        {
+            
+            int fid = Convert.ToInt32(id);
+            var books = db.Books.Include(b => b.User);
+            string filename = (from b in books
+                               where b.ID == fid
+                               select b.FilePath).First();
+            string contentType = "application/pdf";
+            return File(filename, contentType, filename + ".pdf");
         }
     }
 }
