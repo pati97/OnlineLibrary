@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -50,11 +51,18 @@ namespace OnlineLibrary.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,UserId,Title,Author,Description,YearOfPublication,FilePath")] Book book)
+        public ActionResult Create(Book book, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
-                db.Books.Add(book);
+                string FileName = Path.GetFileName(file.FileName);
+                string path = Path.Combine(Server.MapPath("~/Files"), FileName);
+                file.SaveAs(path);
+                db.Books.Add(new Book
+                {
+                    Author = book.Author, CategoryID = book.CategoryID, Description = book.Description, Title = book.Title,
+                    YearOfPublication = book.YearOfPublication, FilePath = "~/Files/" + FileName, ID = book.ID, UserId = book.UserId
+                });
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -146,5 +154,6 @@ namespace OnlineLibrary.Controllers
             string contentType = "application/pdf";
             return File(filename, contentType, filename + ".pdf");
         }
+
     }
 }

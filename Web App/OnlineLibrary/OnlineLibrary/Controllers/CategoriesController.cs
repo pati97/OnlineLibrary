@@ -140,5 +140,16 @@ namespace OnlineLibrary.Controllers
             }
             base.Dispose(disposing);
         }
+        public FileResult Download(string id)
+        {
+
+            int fid = Convert.ToInt32(id);
+            var books = db.Books.Include(b => b.User);
+            string filename = (from b in books
+                               where b.ID == fid
+                               select b.FilePath).First();
+            string contentType = "application/pdf";
+            return File(filename, contentType, filename + ".pdf");
+        }
     }
 }
