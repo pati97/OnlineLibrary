@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using OnlineLibrary.DAL;
 using OnlineLibrary.Models;
+using System.Security.Claims;
 
 namespace OnlineLibrary.Controllers
 {
@@ -54,21 +55,47 @@ namespace OnlineLibrary.Controllers
         public ActionResult Create(Book book, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
-            {
+            { 
+                string userIdValue = String.Empty; 
+                var claimsIdentity = User.Identity as ClaimsIdentity;
+                if (claimsIdentity != null)
+                {
+                    // the principal identity is a claims identity.
+                    // now we need to find the NameIdentifier claim
+                    var userIdClaim = claimsIdentity.Claims
+                        .FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+
+                    if (userIdClaim != null)
+                    {
+                        userIdValue = userIdClaim.Value;
+                    }
+                }
+
                 string FileName = Path.GetFileName(file.FileName);
                 string path = Path.Combine(Server.MapPath("~/Files"), FileName);
                 file.SaveAs(path);
                 db.Books.Add(new Book
                 {
                     Author = book.Author, CategoryID = book.CategoryID, Description = book.Description, Title = book.Title,
-                    YearOfPublication = book.YearOfPublication, FilePath = "~/Files/" + FileName, ID = book.ID, UserId = book.UserId
+                    YearOfPublication = book.YearOfPublication, FilePath = "~/Files/" + FileName, ID = book.ID, UserId = userIdValue,
                 });
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Email", book.UserId);
             return View(book);
+        }
+
+        public JsonResult IsUserExists(string Title)
+        {
+            //check if any of the Title matches the Title specified in the Parameter using the ANY extension method.  
+            return Json(!db.Books.Any(b => b.Title == Title), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult IsCategoryExists(int CategoryID)
+        {
+            //check if any of the Title matches the Title specified in the Parameter using the ANY extension method.  
+            return Json(db.Categories.Any(c => c.ID == CategoryID), JsonRequestBehavior.AllowGet);
         }
 
         // GET: Books/Edit/5
@@ -84,7 +111,7 @@ namespace OnlineLibrary.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Email", book.UserId);
+            //ViewBag.UserId = new SelectList(db.Users, "Id", "Email", book.UserId);
             return View(book);
         }
 
@@ -94,15 +121,31 @@ namespace OnlineLibrary.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,UserId,Title,Author,Description,YearOfPublication")] Book book)
+        public ActionResult Edit([Bind(Include = "ID,UserId,Title,Author,Description,YearOfPublication,CategoryID,FilePath")] Book book)
         {
             if (ModelState.IsValid)
             {
+                string userIdValue = String.Empty;
+                var claimsIdentity = User.Identity as ClaimsIdentity;
+                if (claimsIdentity != null)
+                {
+                    // the principal identity is a claims identity.
+                    // now we need to find the NameIdentifier claim
+                    var userIdClaim = claimsIdentity.Claims
+                        .FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+
+                    if (userIdClaim != null)
+                    {
+                        userIdValue = userIdClaim.Value;
+                    }
+                }
+                book.UserId = userIdValue;
+                
                 db.Entry(book).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Email", book.UserId);
+            
             return View(book);
         }
 
