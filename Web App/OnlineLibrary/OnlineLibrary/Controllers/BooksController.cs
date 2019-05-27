@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using OnlineLibrary.DAL;
 using OnlineLibrary.Models;
 using System.Security.Claims;
+using PagedList;
 
 namespace OnlineLibrary.Controllers
 {
@@ -18,10 +19,74 @@ namespace OnlineLibrary.Controllers
         private LibraryDbContext db = new LibraryDbContext();
 
         // GET: Books
-        public ActionResult Index()
+        public ActionResult Index(int? page, string sortOrder, string searchData, string FilterValue)
         {
+            int currentPage = page ?? 1;
+            int onPage = 5;
+            //------------------------------------------------------
+            //Set a field that will be sorted 
+            //------------------------------------------------------
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.IdSort = String.IsNullOrEmpty(sortOrder) ? "IdAscending" : "";
+            ViewBag.AuthorSort = sortOrder == "AuthorDescending" ? "AuthorAscending" : "AuthorDescending";
+            ViewBag.TitleSort = sortOrder == "TitleAscending" ? "TitleDescending" : "TitleAscending";
+            ViewBag.DescriptionSort = sortOrder == "DescriptionAscending" ? "DescriptionDescending" : "DescriptionAscending";
+            ViewBag.YearSort = sortOrder == "YearOfPublicationAscending" ? "YearOfPublicationDescending" : "YearOfPublicationAscending" ;
+
             var books = db.Books.Include(b => b.User);
-            return View(books.ToList());
+
+            switch (sortOrder)
+            {
+                case "AuthorDescending":
+                    books = books.OrderByDescending(b => b.Author);
+                    break;
+                case "AuthorAscending":
+                    books = books.OrderBy(b => b.Author);
+                    break;
+                case "TitleAscending":
+                    books = books.OrderBy(s => s.Title);
+                    break;
+                case "TitleDescending":
+                    books = books.OrderByDescending(s => s.Title);
+                    break;
+                case "DescriptionAscending":
+                    books = books.OrderBy(b => b.Description);
+                    break;
+                case "DescriptionDescending":
+                    books = books.OrderByDescending(b => b.Description);
+                    break;
+                case "YearOfPublicationAscending":
+                    books = books.OrderBy(b => b.YearOfPublication);
+                    break;
+                case "YearOfPublicationDescending":
+                    books = books.OrderByDescending(b => b.YearOfPublication);
+                    break;
+                case "IdAscending":
+                    books = books.OrderBy(b => b.ID);
+                    break;
+                default:
+                    books = books.OrderByDescending(b => b.ID);
+                    break;
+            }
+            //-----------------------------------------------------//
+            //-----------Search book by title----------------------//
+            //-----------------------------------------------------//
+            if (searchData != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchData = FilterValue;
+            }
+
+            ViewBag.FilterValue = searchData;
+
+            if (!String.IsNullOrEmpty(searchData))
+            {
+                books = books.Where(b => b.Title.ToUpper().Contains(searchData.ToUpper()));
+            }
+            return View(books.ToPagedList(currentPage,onPage));
         }
 
         // GET: Books/Details/5

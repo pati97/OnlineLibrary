@@ -1,0 +1,15 @@
+﻿@model OnlineLibrary.Models.Book
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>@Model.Title</h2>
+<hr />
+<p>
+    @Html.ActionLink("Create New", "Create", new { bookId = Model.ID })
+</p>
+
+@Html.Partial("_Comment", Model.Comments)
+
+@Html.ActionLink("Go back to book list", "Index", "Books")

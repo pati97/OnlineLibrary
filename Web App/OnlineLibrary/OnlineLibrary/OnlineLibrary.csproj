@@ -52,6 +52,12 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -188,6 +194,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="DAL\LibraryDbContext.cs" />
@@ -226,6 +233,18 @@
     <Compile Include="Migrations\201904291830226_AddingPathToBook.Designer.cs">
       <DependentUpon>201904291830226_AddingPathToBook.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905181007518_Modify table Comments.cs" />
+    <Compile Include="Migrations\201905181007518_Modify table Comments.Designer.cs">
+      <DependentUpon>201905181007518_Modify table Comments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905181303319_Modify Comments.cs" />
+    <Compile Include="Migrations\201905181303319_Modify Comments.Designer.cs">
+      <DependentUpon>201905181303319_Modify Comments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905201229539_ChangeConfiguration.cs" />
+    <Compile Include="Migrations\201905201229539_ChangeConfiguration.Designer.cs">
+      <DependentUpon>201905201229539_ChangeConfiguration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
@@ -240,6 +259,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -317,6 +337,12 @@
     <Content Include="Views\Categories\Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
     <Content Include="Views\Categories\ShowBooks.cshtml" />
+    <Content Include="Views\Comments\Create.cshtml" />
+    <Content Include="Views\Comments\Delete.cshtml" />
+    <Content Include="Views\Comments\Details.cshtml" />
+    <Content Include="Views\Comments\Edit.cshtml" />
+    <Content Include="Views\Comments\Index.cshtml" />
+    <Content Include="Views\Comments\_Comment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -358,6 +384,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904291830226_AddingPathToBook.resx">
       <DependentUpon>201904291830226_AddingPathToBook.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905181007518_Modify table Comments.resx">
+      <DependentUpon>201905181007518_Modify table Comments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905181303319_Modify Comments.resx">
+      <DependentUpon>201905181303319_Modify Comments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905201229539_ChangeConfiguration.resx">
+      <DependentUpon>201905201229539_ChangeConfiguration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

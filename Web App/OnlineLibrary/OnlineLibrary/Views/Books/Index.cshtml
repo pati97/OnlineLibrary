@@ -1,7 +1,11 @@
-﻿@model IEnumerable<OnlineLibrary.Models.Book>
+﻿@model PagedList.IPagedList<OnlineLibrary.Models.Book>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "The Book List - metatitle to 60 characters";
+    ViewBag.Description = "The Books that are available on our website - metadescription to 160 characters";
+    ViewBag.KeyWords = "Book, Ebook, Category, Free book, download, upload, title, author, application";
 }
 
 <h2 style="text-align:center">List of books</h2>
@@ -13,19 +17,27 @@
     </p>
 }
 <br />
+@using (Html.BeginForm())
+{
+    <p>
+        Search: @Html.TextBox("searchData", ViewBag.FilterValue as string)
+        <input type="submit" value="Find" />
+    </p>
+}
+<br />
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.ActionLink("Title", "Index", new { sortOrder = ViewBag.TitleSort}, new { @class ="color-class"})
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Author)
+            @Html.ActionLink("Author", "Index", new { sortOrder = ViewBag.AuthorSort }, new { @class = "color-class" })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.ActionLink("Description", "Index", new { sortOrder = ViewBag.DescriptionSort }, new { @class = "color-class" })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.YearOfPublication)
+            @Html.ActionLink("YearOfPublication", "Index", new { sortOrder = ViewBag.YearSort }, new { @class = "color-class" })
         </th>
         <th></th>
     </tr>
@@ -50,6 +62,10 @@
                 @Html.ActionLink("Download", "Download", new { id = item.ID }, new { @class = "btn btn-success" })
                 <br />
                 @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-warning" })
+                <br />
+                @Html.ActionLink("Reviews", "Index", "Comments", new { id = item.ID }, new { @class = "btn btn-info"})
+
+                
               
                 @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                 {
@@ -59,10 +75,13 @@
                     @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-danger" })
                 }
 
-
-
             </td>
         </tr>
     }
-
 </table>
+
+<div>
+    <br />
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) with @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, FilterValue = ViewBag.FilterValue }))
+</div>

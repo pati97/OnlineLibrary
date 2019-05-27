@@ -1,0 +1,16 @@
+﻿@model IEnumerable<OnlineLibrary.Models.Comments>
+
+<ul>
+    @foreach (var item in Model)
+    {
+        <li>
+            <div>
+                <h4>@item.Rating / 6</h4> <small>Author Name: @item.Author @if (User != null && User.Identity != null && item.Author == User.Identity.Name)
+                { }</small>
+            </div>
+            <p>@Html.DisplayFor(modelItem => item.Comment)</p>
+            @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class= "btn btn-warning"})
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-danger" })
+        </li>
+    }
+</ul>

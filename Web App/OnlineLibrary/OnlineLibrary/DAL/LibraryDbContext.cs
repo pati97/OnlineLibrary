@@ -36,6 +36,14 @@ namespace OnlineLibrary.DAL
                 (x => x.User).WithMany(x => x.Books)
                 .HasForeignKey(x => x.UserId)
                 .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<Comments>().HasRequired
+                (x => x.Books).WithMany(x => x.Comments)
+                .HasForeignKey(x => x.BookId)
+                .WillCascadeOnDelete(true);
+
+             //modelBuilder.Entity<Comments>()
+             //.Property(c => c.).ValueGeneratedOnAddOrUpdate();
         }
     }
 }

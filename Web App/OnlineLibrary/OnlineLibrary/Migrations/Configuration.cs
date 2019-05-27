@@ -132,7 +132,7 @@ namespace OnlineLibrary.Migrations
             //        BookId = i,
             //        Comment = "A Comment of Book " + i.ToString(),
             //    };
-            //    context.Set<Comments>().AddOrUpdate(comment);
+            context.Set<Comments>().AddOrUpdate(b => b.ID);
             //}
             context.SaveChanges();
         }

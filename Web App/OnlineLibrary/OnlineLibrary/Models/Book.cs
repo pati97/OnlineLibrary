@@ -11,9 +11,10 @@ namespace OnlineLibrary.Models
 {
     public class Book
     {
+        private readonly DAL.LibraryDbContext _db = new DAL.LibraryDbContext();
+
         [Key]
         public int ID { get; set; }
-
         public string UserId { get; set; }
         [Remote("IsUserExists", "Books", ErrorMessage ="The Title already exists !")]
         public string Title { get; set; }
@@ -27,5 +28,11 @@ namespace OnlineLibrary.Models
         public virtual Category Category { get; set; }
         public virtual ApplicationUser User { get; set; } 
         public virtual ICollection<Comments> Comments { get; set; }
+
+        public IQueryable<Book> GetPage(int? page, int? pageSize)
+        {
+            var book = _db.Books.OrderByDescending(o => o.Title).Skip((page.Value - 1) * pageSize.Value).Take(pageSize.Value);
+            return book;
+        }
     }
 }
